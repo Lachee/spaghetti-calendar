@@ -99,7 +99,7 @@ func (app *RotatingCubeApp) Start() bool {
 
 	// == Create Matrixes
 	// Generate and apply projection matrix
-	app.projMatrix = n.NewMatrixPerspective(45.0, float64(n.Width())/float64(n.Height()), 1, 100.0)
+	app.projMatrix = n.NewMatrixPerspective(45.0, float32(n.Width())/float32(n.Height()), 1, 100.0)
 	n.GL.UniformMatrix4fv(app.uProjMatrixLoc, app.projMatrix)
 
 	// Generate and apply view matrix
@@ -146,6 +146,14 @@ var rotCubeVerts = []Vector3{
 	Vector3{1, -1, -1}, Vector3{1, 1, -1}, Vector3{1, 1, 1}, Vector3{1, -1, 1},
 	Vector3{-1, -1, -1}, Vector3{-1, -1, 1}, Vector3{1, -1, 1}, Vector3{1, -1, -1},
 	Vector3{-1, 1, -1}, Vector3{-1, 1, 1}, Vector3{1, 1, 1}, Vector3{1, 1, -1},
+}
+var rotCubeVertsSquish = []Vector3{
+	Vector3{-0.5, -1, -1}, Vector3{0.5, -1, -1}, Vector3{0.5, 1, -1}, Vector3{-0.5, 1, -1},
+	Vector3{-1, -1, 1}, Vector3{1, -1, 1}, Vector3{1, 1, 1}, Vector3{-1, 1, 1},
+	Vector3{-0.5, -1, -1}, Vector3{-0.5, 1, -1}, Vector3{-1, 1, 1}, Vector3{-1, -1, 1},
+	Vector3{0.5, -1, -1}, Vector3{0.5, 1, -1}, Vector3{1, 1, 1}, Vector3{1, -1, 1},
+	Vector3{-0.5, -1, -1}, Vector3{-1, -1, 1}, Vector3{1, -1, 1}, Vector3{0.5, -1, -1},
+	Vector3{-0.5, 1, -1}, Vector3{-1, 1, 1}, Vector3{1, 1, 1}, Vector3{0.5, 1, -1},
 }
 var rotCubeUV = []Vector2{
 	Vector2{0.0, 0.0}, Vector2{1.0, 0.0}, Vector2{1.0, 1.0}, Vector2{0.0, 1.0},

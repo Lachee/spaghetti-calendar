@@ -45,8 +45,9 @@ func newMeshRenderer() *meshRenderer {
 	mr.shader.Use()
 
 	//Setup initial camera
-	mr.projectionMatrix = n.NewMatrixPerspective(45.0, float64(n.Width())/float64(n.Height()), 1, 100.0)
+	mr.projectionMatrix = n.NewMatrixPerspective(45.0, float32(n.Width())/float32(n.Height()), 1, 100.0)
 	mr.cameraMatrix = n.NewMatrixLookAt(Vector3{20.0, 20.0, 20.0}, Vector3{0, 0, 0}, Vector3{0, 1, 0})
+	//mr.cameraMatrix = n.NewMatrixRotate(Vector3{1, 0, 0}, n.PI/3).Multiply(n.NewMatrixTranslate(Vector3{0, 20, -20}))
 
 	return mr
 }
