@@ -7,9 +7,9 @@ import (
 )
 
 //app is the application
-var app = &SpagApplication{}
+//var app = &SpagApplication{}
 
-//var app = &RotatingCubeApp{}
+var app = &RotatingCubeApp{}
 
 func main() {
 

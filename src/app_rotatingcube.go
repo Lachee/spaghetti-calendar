@@ -92,14 +92,12 @@ func (app *RotatingCubeApp) Start() bool {
 	app.shader.Use()
 
 	// == Set WeebGL properties
-	n.GL.ClearColor(0.5, 0.5, 0.5, 0.9)
 	n.GL.ClearDepth(1)
-	n.GL.Viewport(0, 0, n.Width(), n.Height())
 	n.GL.DepthFunc(n.GlLEqual)
 
 	// == Create Matrixes
 	// Generate and apply projection matrix
-	app.projMatrix = n.NewMatrixPerspective(45.0, float32(n.Width())/float32(n.Height()), 1, 100.0)
+	app.projMatrix = n.NewMatrixPerspective(45.0, n.GL.AspectRatio(), 1, 100.0)
 	n.GL.UniformMatrix4fv(app.uProjMatrixLoc, app.projMatrix)
 
 	// Generate and apply view matrix
@@ -118,10 +116,10 @@ func (app *RotatingCubeApp) Update(dt float32) {
 	app.rotation = app.rotation + dt/500*5
 
 	//Update the move matrix
-	movMatrix := n.NewMatrixRotate(n.NewVector3Up(), 0.5)
-	movMatrix = movMatrix.Multiply(n.NewMatrixRotate(n.NewVector3Forward(), 0.3*app.rotation))
-	movMatrix = movMatrix.Multiply(n.NewMatrixRotate(n.NewVector3Right(), 0.2*app.rotation))
-	app.moveMatrix = movMatrix
+	//movMatrix := n.NewMatrixRotate(n.NewVector3Up(), 0.5)
+	//movMatrix = movMatrix.Multiply(n.NewMatrixRotate(n.NewVector3Forward(), 0.3*app.rotation))
+	//movMatrix = movMatrix.Multiply(n.NewMatrixRotate(n.NewVector3Right(), 0.2*app.rotation))
+	//app.moveMatrix = movMatrix
 }
 
 //Render occurs when the screen needs updating

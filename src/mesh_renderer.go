@@ -45,9 +45,19 @@ func newMeshRenderer() *meshRenderer {
 	mr.shader.Use()
 
 	//Setup initial camera
-	mr.projectionMatrix = n.NewMatrixPerspective(45.0, float32(n.Width())/float32(n.Height()), 1, 100.0)
-	mr.cameraMatrix = n.NewMatrixLookAt(Vector3{20.0, 20.0, 20.0}, Vector3{0, 0, 0}, Vector3{0, 1, 0})
-	//mr.cameraMatrix = n.NewMatrixRotate(Vector3{1, 0, 0}, n.PI/3).Multiply(n.NewMatrixTranslate(Vector3{0, 20, -20}))
+	mr.projectionMatrix = n.NewMatrixPerspective(45, float32(n.GL.Width())/float32(n.GL.Height()), 1, 100.0)
+	//mr.cameraMatrix = n.NewMatrixTranslate(Vector3{10, -1, 0})
+
+	//p := Vector3{-10, 10, 0}
+	//q := n.NewQuaternionLookAt(p, Vector3{0, 0, 0}, Vector3{0, 1, 0})
+	//mr.cameraMatrix = n.NewMatrixTranslate(p).Multiply(n.NewMatrixRotation(q))
+
+	mr.cameraMatrix = n.NewMatrixTranslate(Vector3{0, 0, 0})
+	log.Println(mr.cameraMatrix)
+
+	//mr.cameraMatrix = mr.cameraMatrix.Multiply(n.NewMatrixLookAt(Vector3{20.0, 20.0, 20.0}, Vector3{0, 0, 0}, Vector3{0, 1, 0}))
+	//log.Println(mr.cameraMatrix)
+	//mr.cameraMatrix = n.NewMatrixRotation(n.NewQuaternionAxis(n.PI/3, Vector3{1, 0, 0})).Multiply(n.NewMatrixTranslate(Vector3{0, 20, -20}))
 
 	return mr
 }
@@ -56,9 +66,7 @@ func newMeshRenderer() *meshRenderer {
 func (mr *meshRenderer) begin() {
 
 	//Clear the scene
-	n.GL.ClearColor(0.5, 0.5, 0.5, 0.9)
 	n.GL.ClearDepth(1)
-	n.GL.Viewport(0, 0, n.Width(), n.Height())
 	n.GL.DepthFunc(n.GlLEqual)
 
 	//Clear
@@ -79,7 +87,7 @@ func (mr *meshRenderer) end() {
 }
 
 //draw a particular mesh to the screen
-func (mr *meshRenderer) draw(mesh *mesh, transform Transform) {
+func (mr *meshRenderer) draw(mesh *mesh, modelMatrix Matrix) {
 
 	//New Mesh, Who Dis?
 	if mr.previousMesh != mesh {
@@ -92,7 +100,6 @@ func (mr *meshRenderer) draw(mesh *mesh, transform Transform) {
 	}
 
 	//Set the shader deets
-	modelMatrix := transform.ToMatrix()
 	n.GL.UniformMatrix4fv(mr.uModelMatrixLoc, modelMatrix)
 
 	//Render
